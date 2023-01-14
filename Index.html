@@ -11,25 +11,53 @@
     <p id="numbers"></p>
     <button onclick="rollDiceAttack()">Roll Attack Dice</button>
     <button onclick="rollDiceDefend()">Roll Defend Dice</button>
+    <button onclick="compareDice()">Compare Dice</button>
     <p id="resultAttack"></p>
     <p id="resultDefend"></p>
+    <p id="resultCompare"></p>
 
     <script>
         function getInput() {
-            var num1 = parseInt(prompt("Enter the first integer:"));
-            var num2 = parseInt(prompt("Enter the second integer:"));
-            document.getElementById("numbers").innerHTML = "Attacker has: " + num1 + " Defender has: " + num2;
+            // get the number of attacking and defending armies
+            var attackingArmies = parseInt(prompt("Enter number of attacking armies:"));
+            var defendingArmies = parseInt(prompt("Enter number of defending armies:"));
+            document.getElementById("numbers").innerHTML = "Attacker has: " + attackingArmies + " Defender has: " + defendingArmies;
         }
         function rollDiceAttack() {
+            // roll three dice for the attacker
             var attackDice1 = Math.floor(Math.random() * 6) + 1;
             var attackDice2 = Math.floor(Math.random() * 6) + 1;
             var attackDice3 = Math.floor(Math.random() * 6) + 1;
             document.getElementById("resultAttack").innerHTML = "Attacker rolled: " + attackDice1 + ", " + attackDice2 + ", " + attackDice3;
         }
         function rollDiceDefend() {
+            // roll two dice for the defender
             var defendDice1 = Math.floor(Math.random() * 6) + 1;
             var defendDice2 = Math.floor(Math.random() * 6) + 1;
             document.getElementById("resultDefend").innerHTML = "Defender rolled: " + defendDice1 + ", " + defendDice2;
+        }
+        function compareDice() {
+            // adding the dice rolls to an array
+            var attackingDices = [attackDice1, attackDice2, attackDice3];
+            var defendingDices = [defendDice1, defendDice2];
+            // sorting the attacking dices in descending order
+            attackingDices.sort(function (a, b) { return b - a });
+            // sorting the defending dices in descending order
+            defendingDices.sort(function (a, b) { return b - a });
+            // comparing highest dice rolls
+            if (attackingDices[0] > defendingDices[0]) {
+                defendingArmies--;
+            } else {
+                attackingArmies--;
+            }
+            // comparing second highest dice rolls
+            if (attackingDices[1] > defendingDices[1]) {
+                defendingArmies--;
+            } else {
+                attackingArmies--;
+            }
+            // return the number of armies left
+            document.getElementById("resultCompare").innerHTML = "Attacker has left: " + attackingArmies + " Defender has left: " + defendingArmies;
         }
     </script>
 </body>
